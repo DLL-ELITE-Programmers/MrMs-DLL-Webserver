@@ -1,127 +1,127 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            border: none;
-            user-select: none;
-            outline: none;
-        }
-        main {
-            display: flex;
-            flex-direction: column;
-            width: 100dvw;
-            height: 100dvh;
-            align-items: center;
-            justify-content: center;
-            
-            > div {
-                display: flex;
-                flex-direction: column;
-                height: 100%;
-                width: 100%;
-                align-items: center;
-                
-                > .head{
-                    display: flex;
-                    flex-direction: column;
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Document</title>
+	<style>
+		* {
+			margin: 0;
+			padding: 0;
+			box-sizing: border-box;
+			border: none;
+			user-select: none;
+			outline: none;
+		}
+		main {
+			display: flex;
+			flex-direction: column;
+			width: 100dvw;
+			height: 100dvh;
+			align-items: center;
+			justify-content: center;
+			
+			> div {
+				display: flex;
+				flex-direction: column;
+				height: 100%;
+				width: 100%;
+				align-items: center;
+				
+				> .head{
+					display: flex;
+					flex-direction: column;
 
-                    > #nav{
-                        display: flex;
-                        flex-direction: row;
-                        gap: 1rem;
+					> #nav{
+						display: flex;
+						flex-direction: row;
+						gap: 1rem;
 
-                        li {
-                            list-style: none;
-                        }
-                    }
-                }
-            }
-        }
-    </style>
+						li {
+							list-style: none;
+						}
+					}
+				}
+			}
+		}
+	</style>
 </head>
 <body onload="candidates()">
-    <main>
-        <div>
-            <div>
-                <h3>Mr. and Ms. DLL Scorer</h3>
-            </div>
-            <div class="head">
-                <ul id="nav">
-            </div>
-            <div id="femaie"></div>
-            <div id="male"></div>
-        </div>
-    </main>
+	<main>
+		<div>
+			<div>
+				<h3>Mr. and Ms. DLL Scorer</h3>
+			</div>
+			<div class="head">
+				<ul id="nav">
+			</div>
+			<div id="femaie"></div>
+			<div id="male"></div>
+		</div>
+	</main>
 </body>
 <script>
-    const categories = [
-        "Gown",
-        "Insti"
-    ];
+	const categories = [
+		"Gown",
+		"Insti"
+	];
 
-    for(let category of categories){
-        document.getElementById("nav").innerHTML += `<li>${category}</li>`;
-    }
+	for(let category of categories){
+		document.getElementById("nav").innerHTML += `<li>${category}</li>`;
+	}
 
-    function data(){
-        return JSON.parse(localStorage.getItem("pageant") ?? "{}");
-    }
+	function data(){
+		return JSON.parse(localStorage.getItem("pageant") ?? "{}");
+	}
 
-    function setData(data){
-        localStorage.setItem("pageant", data);
-    }
+	function setData(data){
+		localStorage.setItem("pageant", data);
+	}
 
-    async function sendCloudData(judge, data){
-        // const response = await fetch("/send-result",{
-        //     method: "POST",
-        //     headers: {
-        //         "Content-Type": "application/json"
-        //     },
-        //     body: JSON.stringfy({
-        //         `judge_${judge}`: data
-        //     });
-        // })
-        
-        // if(!response.ok){
-        //     alert("Server is not asccessible");
-        // }
-        // TODO: To add success message
-    }
+	async function sendCloudData(judge, data){
+		// const response = await fetch("/send-result",{
+		//     method: "POST",
+		//     headers: {
+		//         "Content-Type": "application/json"
+		//     },
+		//     body: JSON.stringfy({
+		//         `judge_${judge}`: data
+		//     });
+		// })
+		
+		// if(!response.ok){
+		//     alert("Server is not asccessible");
+		// }
+		// TODO: To add success message
+	}
 
-    async function cloudData(judge){
-        const response = await fetch(`/get-result/?judge=judge_${judge}`);
-        if(!response.ok){
-            alert("Server is not accessible");
-        }
-    }
+	async function cloudData(judge){
+		const response = await fetch(`/get-result/?judge=judge_${judge}`);
+		if(!response.ok){
+			alert("Server is not accessible");
+		}
+	}
 
-    async function candidates(){
-        const response = await fetch("/candidates?code=hellolord",{
-            method: "GET"
-        })
-        if(!response.ok){
-            alert("Server is not accessible")
-        }
-        const data = response.json()
-        const female = data['female']
-        const male = data['male']
-        
-        const ul = document.createElement("ul")
-        for(const m of male){
-            const li = document.createElement("li")
-            li.innerHTML = m
-            ul.appendChild(li)
-        }
-        document.getElementById("male").appendChild(ul)
-    }
+	async function candidates(){
+		const response = await fetch("/candidates?code=hellolord",{
+			method: "GET"
+		})
+		if(!response.ok){
+			alert("Server is not accessible")
+		}
+		const data = response.json()
+		const female = data['female']
+		const male = data['male']
+		
+		const ul = document.createElement("ul")
+		for(const m of male){
+			const li = document.createElement("li")
+			li.innerHTML = m
+			ul.appendChild(li)
+		}
+		document.getElementById("male").appendChild(ul)
+	}
 
-    candidates()
+	candidates()
 </script>
 </html>
