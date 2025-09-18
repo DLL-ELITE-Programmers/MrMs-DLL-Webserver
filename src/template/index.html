@@ -20,13 +20,19 @@
             height: 100dvh;
             align-items: center;
             justify-content: center;
-
+            
             > div {
                 display: flex;
                 flex-direction: column;
+                height: 100%;
+                width: 100%;
+                align-items: center;
+                
+                > .head{
+                    display: flex;
+                    flex-direction: column;
 
-                .head{
-                    #nav{
+                    > #nav{
                         display: flex;
                         flex-direction: row;
                         gap: 1rem;
@@ -40,14 +46,17 @@
         }
     </style>
 </head>
-<body>
+<body onload="candidates()">
     <main>
         <div>
+            <div>
+                <h3>Mr. and Ms. DLL Scorer</h3>
+            </div>
             <div class="head">
                 <ul id="nav">
             </div>
-            <div></div>
-            <div></div>
+            <div id="femaie"></div>
+            <div id="male"></div>
         </div>
     </main>
 </body>
@@ -93,5 +102,26 @@
         }
     }
 
+    async function candidates(){
+        const response = await fetch("/candidates?code=hellolord",{
+            method: "GET"
+        })
+        if(!response.ok){
+            alert("Server is not accessible")
+        }
+        const data = response.json()
+        const female = data['female']
+        const male = data['male']
+        
+        const ul = document.createElement("ul")
+        for(const m of male){
+            const li = document.createElement("li")
+            li.innerHTML = m
+            ul.appendChild(li)
+        }
+        document.getElementById("male").appendChild(ul)
+    }
+
+    candidates()
 </script>
 </html>
