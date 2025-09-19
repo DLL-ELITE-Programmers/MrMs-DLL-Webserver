@@ -36,17 +36,42 @@
 						display: flex;
 						flex-direction: row;
 						gap: 1rem;
+						list-style: none;
 
 						li {
 							list-style: none;
 						}
 					}
 				}
+				
+				> .inner {
+					display: flex;
+					flex-direction: row;
+
+					> div{
+						display: flex;
+						flex-direction: row;
+						gap: 1rem;
+						list-style: none;
+	
+						li {
+							list-style: none;
+						}
+				}
+				
+				> #male {
+					border-left: 1px black solid;
+					padding-left: .5rem;
+				}
+				> #female {
+					border-right: 1px black solid;
+					padding-right: .5rem;
+				}
 			}
 		}
 	</style>
 </head>
-<body onload="candidates()">
+<body>
 	<main>
 		<div>
 			<div>
@@ -55,8 +80,10 @@
 			<div class="head">
 				<ul id="nav">
 			</div>
-			<div id="femaie"></div>
-			<div id="male"></div>
+			<div class="inner">
+				<div id="female"></div>
+				<div id="male"></div>
+			</div>
 		</div>
 	</main>
 </body>
@@ -103,23 +130,38 @@
 	}
 
 	async function candidates(){
-		const response = await fetch("/candidates?code=hellolord",{
+		const response = await fetch("/candidates?code=missnapokita",{
 			method: "GET"
 		})
+		console.log(response)
 		if(!response.ok){
-			alert("Server is not accessible")
+			return alert("Server is not accessible")
 		}
-		const data = response.json()
+
+		const data = await response.json()
 		const female = data['female']
 		const male = data['male']
 		
-		const ul = document.createElement("ul")
+		const m_ul = document.createElement("ul")
 		for(const m of male){
 			const li = document.createElement("li")
-			li.innerHTML = m
-			ul.appendChild(li)
+			const img = document.createElement("img")
+			const span = document.createElement("span")
+			img.src = `/assets/${m}.png`
+			span.textContent = m
+			li.appendChild(img)
+			li.appendChild(span)
+			m_ul.appendChild(li)
 		}
-		document.getElementById("male").appendChild(ul)
+		document.getElementById("male").appendChild(m_ul)
+
+		const f_ul = document.createElement("ul")
+		for(const m of female){
+			const li = document.createElement("li")
+			li.innerHTML = m
+			f_ul.appendChild(li)
+		}
+		document.getElementById("female").appendChild(f_ul)
 	}
 
 	candidates()

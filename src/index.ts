@@ -1,35 +1,40 @@
-// TODO: Main Call function
+import express, { Application, Request, Response } from "express";
+import dotenv from "dotenv";
+import path from 'path'
+dotenv.config();
 
-import express from "express";
+const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
+const app: Application = express();
 
-const app = express()
-const PORT = 3000
-app.use(express.json())
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use('assets/', express.static(path.join(__dirname, 'assets'))); 
 
-const candidate_test = {
+const candidates = {
 	"male": [
-		'candidate_1',
-		'candidate_2'
+		"candidate_1",
+		"candidate_2"
 	],
 	"female": [
-		'candidate_1',
-		'candidate_2'
+		"candidate_1",
+		"candidate_2"
 	]
 }
 
-app.get("/", (req, res) => {
+app.get("/", (_req: Request, res: Response) => {
 	res.sendFile(`${__dirname}/template/index.html`)
-})
+});
 
-app.get("/candidates", (req, res) => {
-	if(req.query['code'] == "hellolord"){
-		return res.send(candidate_test)
+app.get("/candidates", (req: Request, res: Response) => {
+	if(req.query['code'] === "missnapokita"){
+		return res.json(candidates)
 	}
-	return res.send({
-		"error": "Not authorized"
+	res.json({
+		"error": "Not Authorized"
 	})
 })
 
+
 app.listen(PORT, () => {
-	console.log(`Running: http://localhost:3000`)
-})
+  console.log(`Server listening on http://localhost:${PORT} (env=${process.env.NODE_ENV || "development"})`);
+});
