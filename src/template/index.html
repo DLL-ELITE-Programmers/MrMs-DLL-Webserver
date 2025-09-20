@@ -62,10 +62,20 @@
 				> #male {
 					border-left: 1px black solid;
 					padding-left: .5rem;
+
+					img {
+						aspect-ratio: 9/16;
+						width: 3rem;
+					}
 				}
 				> #female {
 					border-right: 1px black solid;
 					padding-right: .5rem;
+					
+					img {
+						aspect-ratio: 9/16;
+						width: 3rem;
+					}
 				}
 			}
 		}
@@ -147,7 +157,7 @@
 			const li = document.createElement("li")
 			const img = document.createElement("img")
 			const span = document.createElement("span")
-			img.src = `/assets/${m}.png`
+			img.src = `/assets/male/${m}.png`
 			span.textContent = m
 			li.appendChild(img)
 			li.appendChild(span)
@@ -156,9 +166,14 @@
 		document.getElementById("male").appendChild(m_ul)
 
 		const f_ul = document.createElement("ul")
-		for(const m of female){
+		for(const f of female){
 			const li = document.createElement("li")
-			li.innerHTML = m
+			const img = document.createElement("img")
+			const span = document.createElement("span")
+			img.src = `/assets/female/${f}.png`
+			span.textContent = f
+			li.appendChild(img)
+			li.appendChild(span)
 			f_ul.appendChild(li)
 		}
 		document.getElementById("female").appendChild(f_ul)

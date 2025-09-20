@@ -6,9 +6,9 @@ dotenv.config();
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
 const app: Application = express();
 
+app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use('assets/', express.static(path.join(__dirname, 'assets'))); 
 
 const candidates = {
 	"male": [
