@@ -20,14 +20,15 @@
 			height: 100dvh;
 			align-items: center;
 			justify-content: center;
-			
+
 			> div {
 				display: flex;
 				flex-direction: column;
 				height: 100%;
 				width: 100%;
 				align-items: center;
-				
+				box-sizing: border-box;
+
 				> .head{
 					display: flex;
 					flex-direction: column;
@@ -47,34 +48,45 @@
 				> .inner {
 					display: flex;
 					flex-direction: row;
+					width: 100%;
 
 					> div{
 						display: flex;
 						flex-direction: row;
-						gap: 1rem;
 						list-style: none;
-	
+						
 						li {
+							display: flex;
+							flex-direction: row;
+							align-items: center;
 							list-style: none;
+							margin: .5rem 0;
 						}
-				}
-				
-				> #male {
-					border-left: 1px black solid;
-					padding-left: .5rem;
-
-					img {
-						aspect-ratio: 9/16;
-						width: 3rem;
 					}
-				}
-				> #female {
-					border-right: 1px black solid;
-					padding-right: .5rem;
+				
+
+					> .participants {
+						display: flex;
+						flex-direction: column;
+						box-sizing: border-box;
+						background: rgba(33, 0, 0, 0.2);
+						width: 100%;
+						padding: .5rem;
+
+						img {
+							aspect-ratio: 9/16;
+							width: 3rem;
+						}
+					}
 					
-					img {
-						aspect-ratio: 9/16;
-						width: 3rem;
+					> #male {
+						border-left: 1px black solid;
+						padding-left: .5rem; 
+					}
+
+					> #female {
+						border-right: 1px black solid;
+						padding-right: .5rem;
 					}
 				}
 			}
@@ -91,8 +103,8 @@
 				<ul id="nav">
 			</div>
 			<div class="inner">
-				<div id="female"></div>
-				<div id="male"></div>
+				<div class="participants" id="female"></div>
+				<div class="participants" id="male"></div>
 			</div>
 		</div>
 	</main>
@@ -158,8 +170,8 @@
 			const img = document.createElement("img")
 			const span = document.createElement("span")
 			img.src = `/assets/male/${m}.png`
-			span.textContent = m
 			li.appendChild(img)
+			span.textContent = m
 			li.appendChild(span)
 			m_ul.appendChild(li)
 		}
