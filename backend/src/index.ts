@@ -1,6 +1,7 @@
 import express, { Application, Request, Response } from "express";
 import dotenv from "dotenv";
 import path from 'path'
+import cors from "cors"
 dotenv.config();
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
@@ -8,16 +9,29 @@ const app: Application = express();
 
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 app.use(express.json());
+app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 
 const candidates = {
 	"male": [
-		"candidate_1",
-		"candidate_2"
+		{
+			"number": "1",
+			"department": "BSIT",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
+		}
 	],
 	"female": [
-		"candidate_1",
-		"candidate_2"
+		{
+			"number": "1",
+			"department": "BSIT",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
+		}
 	]
 }
 
