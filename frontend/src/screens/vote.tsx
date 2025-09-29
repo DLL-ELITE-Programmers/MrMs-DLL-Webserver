@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../components/header";
-import {type candidate, type participant } from "../interfaces";
+import {type candidate, type participant, type scores } from "../interfaces";
 import axios from "axios";
 import AddContestant from "../components/candidate";
 
@@ -9,6 +9,7 @@ export default function Vote() {
   const [message, setMessage] = useState("");
   const [sheets, setSheets] = useState<scores>({});
   const [requiredFields, setRequired] = useState<string[]>([]);
+  const [category, setCategory] = useState("")
   const minimum = 7;
   const maximum = 10;
 
@@ -20,7 +21,7 @@ export default function Vote() {
         );
         setContestants(data);
       } catch (e) {
-        setMessage(e);
+        setMessage(e.error);
       }
     })();
   }, []);
@@ -68,12 +69,7 @@ export default function Vote() {
 
   return (
     <div className="flex flex-col gap-1">
-      <Header />
-      {JSON.stringify(sheets)}
-      <br />
-      {message}
-      <br />
-      {requiredFields}
+      <Header subtitle={message} />
       <form
         method="POST"
         onSubmit={(event: React.FormEvent<HTMLFormElement>) => {

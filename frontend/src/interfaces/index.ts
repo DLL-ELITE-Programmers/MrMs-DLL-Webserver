@@ -4,8 +4,8 @@ export interface participant {
 }
 
 export interface candidate{
-    male: participant
-    female: participant
+    male: participant[]
+    female: participant[]
 }
 
-export type scores = Record<string, number>
+export type scores = Record<string, number|undefined>
