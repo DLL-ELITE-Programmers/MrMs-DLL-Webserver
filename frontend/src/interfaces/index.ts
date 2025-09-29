@@ -7,3 +7,5 @@ export interface candidate{
     male: participant
     female: participant
 }
+
+export type scores = Record<string, number>

@@ -1,13 +1,13 @@
 import { useEffect, useState } from "react";
 import Header from "../components/header";
-import type { candidate, participant } from "../interfaces";
+import {type candidate, type participant } from "../interfaces";
 import axios from "axios";
 import AddContestant from "../components/candidate";
 
 export default function Vote() {
   const [contestants, setContestants] = useState<candidate>();
   const [message, setMessage] = useState("");
-  const [sheets, setSheets] = useState({});
+  const [sheets, setSheets] = useState<scores>({});
   const [requiredFields, setRequired] = useState<string[]>([]);
   const minimum = 7;
   const maximum = 10;
@@ -29,6 +29,7 @@ export default function Vote() {
     input: React.ChangeEvent<HTMLInputElement>,
     key: string,
   ) => {
+    let required = requiredFields;
     input.target.value = input.target.value.replace(/[^0-9.]/g, "");
     if ((input.target.value.match(/\./g) || []).length > 1) {
       const splitByDot = input.target.value.split(".")
@@ -39,15 +40,20 @@ export default function Vote() {
     }
     const n = parseFloat(input.target.value);
     if (n >= minimum && n <= maximum) {
-      setSheets({
+        required = required.filter(item => item !== key);
+        required = [...new Set(required.filter(item => item !== key))];
+        setSheets({
         ...sheets,
         [key]: n,
       });
     } else {
-      const req = requiredFields;
-      req.push(key);
-      setRequired(req);
+        required.push(key);
+        setSheets({
+          ...sheets,
+          [key]: undefined,
+        });
     }
+    setRequired(required)
   };
 
   const submit = () => {
@@ -55,14 +61,19 @@ export default function Vote() {
       setMessage(
         `The minimum score is ${minimum} and the maximum score is ${maximum}. Please check out these fields: \n${requiredFields.join("\n")}`,
       );
-      setRequired([]);
+    }else{
+        setMessage("Done")
     }
   };
 
   return (
     <div className="flex flex-col gap-1">
       <Header />
+      {JSON.stringify(sheets)}
+      <br />
       {message}
+      <br />
+      {requiredFields}
       <form
         method="POST"
         onSubmit={(event: React.FormEvent<HTMLFormElement>) => {
@@ -87,7 +98,7 @@ export default function Vote() {
             })}
           </div>
         </div>
-        <input type="submit" className="" value="Send" />
+        <input type="submit" className="text-2xl bg-[rgb(33_33_33)]" value="Send" />
       </form>
     </div>
   );
