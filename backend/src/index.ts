@@ -21,6 +21,46 @@ const candidates = {
 		{
 			"number": "2",
 			"department": "BSSW",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
+		},
+		{
+			"number": "2",
+			"department": "BSSW",
 		}
 	],
 	"female": [
