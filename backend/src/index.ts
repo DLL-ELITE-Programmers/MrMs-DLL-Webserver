@@ -29,6 +29,9 @@ app.get("/candidates", (req: Request, res: Response) => {
 	})
 })
 
+app.post("/submit-score", (req: Request, res: Response) => {
+	
+})
 
 app.listen(PORT, () => {
   console.log(`Server listening on http://localhost:${PORT} (env=${process.env.NODE_ENV || "development"})`);
