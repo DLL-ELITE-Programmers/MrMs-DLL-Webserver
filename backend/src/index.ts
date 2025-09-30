@@ -17,7 +17,7 @@ const candidates = JSON.parse(fs.readFileSync(path.join(__dirname, "data/partici
 const datafile = `data/data.json`
 
 app.get("/", (_req: Request, res: Response) => {
-	res.sendFile(`${__dirname}/template/index.html`)
+	res.send("Hello po")
 });
 
 app.get("/candidates", (req: Request, res: Response) => {

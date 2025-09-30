@@ -82,7 +82,7 @@ export default function Vote() {
           event.preventDefault();
           submit();
         }}
-        className="w-full flex flex-col gap-1 h-full box-border"
+        className="w-full flex flex-col gap-1 h-full box-border overflow-hidden"
       >
         <div className="flex gap-2 justify-center">
           {
@@ -90,30 +90,37 @@ export default function Vote() {
               return (
                 <span onClick={() => {
                   setCategory(index)
-                }} className={`border-2 ${index === category ? "border-solid border-black" : "border-b-solid border-transparent border-b-black"} cursor-pointer select-none transition-all delay-75 rounded-lg px-2`}>
+                }}
+                style={{
+                  backgroundColor: "rgba(255, 255, 255, 0.4)",
+                  backdropFilter: "blur(25px)"
+                }}
+                className={`border-2 ${index === category ? "border-solid border-[#FFD700]" : "border-b-solid border-transparent border-b-[#FFD700]"} cursor-pointer select-none transition-all delay-75 rounded-lg px-2`}>
                   {_category}
                 </span>
               )
             })
           }
         </div>
-        <div className="flex flex-row">
-          <div className="flex flex-col w-full gap-1">
-            {contestants?.male?.map((contestant: participant) => {
-              return (
-                <AddContestant sex="female" validator={numberValidator} minimum={minimum} maximum={maximum}>{contestant}</AddContestant>
-              );
-            })}
-          </div>
-          <div className="flex flex-col w-full gap-1">
-            {contestants?.female?.map((contestant: participant) => {
-              return (
-                <AddContestant sex="female" validator={numberValidator} minimum={minimum} maximum={maximum}>{contestant}</AddContestant>
-              );
-            })}
+        <div className="flex flex-col overflow-scroll box-border">
+          <div className="flex flex-row">
+            <div className="flex flex-col w-full gap-1">
+              {contestants?.male?.map((contestant: participant) => {
+                return (
+                  <AddContestant sex="female" validator={numberValidator} minimum={minimum} maximum={maximum}>{contestant}</AddContestant>
+                );
+              })}
+            </div>
+            <div className="flex flex-col w-full gap-1">
+              {contestants?.female?.map((contestant: participant) => {
+                return (
+                  <AddContestant sex="female" validator={numberValidator} minimum={minimum} maximum={maximum}>{contestant}</AddContestant>
+                );
+              })}
+            </div>
           </div>
         </div>
-        <input type="submit" className="text-2xl bg-[rgb(33_33_33)]" value="Send" />
+        <input type="submit" className="text-2xl bg-[rgb(33_33_33)] box-border" value="Send" />
       </form>
     </div>
   );
