@@ -26,9 +26,6 @@ app.get("/candidates", (req: Request, res: Response) => {
 		if(req.query['code'] === "missnapokita"){
 			return res.json(candidates)
 		}
-		res.json({
-			"error": "Not Authorized"
-		})
 	}
 	res.status(404).json({
 		"error": "Something went wrong",
