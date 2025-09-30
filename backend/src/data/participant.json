@@ -1,0 +1,62 @@
+{
+	"male": [
+		{
+			"number": "1",
+			"department": "BSIT"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		}
+	],
+	"female": [
+		{
+			"number": "1",
+			"department": "BSIT"
+		},
+		{
+			"number": "2",
+			"department": "BSSW"
+		}
+	]
+}

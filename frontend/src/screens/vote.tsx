@@ -26,7 +26,7 @@ export default function Vote() {
           "http://localhost:3000/candidates?code=missnapokita",
         );
         setContestants(data);
-      } catch (e) {
+      } catch (e: any) {
         setMessage(e.error);
       }
     })();
