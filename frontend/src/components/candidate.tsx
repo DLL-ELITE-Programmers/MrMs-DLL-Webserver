@@ -21,7 +21,7 @@ export default function AddContestant(props: CandidateCardProps){
             }}>
                 <h3 className="text-2xl">{props.sex[0].toUpperCase() + props.sex.substring(1)} Candidate #{props.children.number}</h3>
                 <input
-                    className="text-2xl outline-none ml-2"
+                    className="text-2xl outline-none ml-4"
                     min={props.minimum}
                     required={true}
                     key={`${props.sex}_candidate_${props.children.number}`}

@@ -21,11 +21,18 @@ app.get("/", (_req: Request, res: Response) => {
 });
 
 app.get("/candidates", (req: Request, res: Response) => {
-	if(req.query['code'] === "missnapokita"){
-		return res.json(candidates)
+	const header = req.headers
+	if(header.referer && header.origin && header["sec-fetch-mode"] === "cors"){
+		if(req.query['code'] === "missnapokita"){
+			return res.json(candidates)
+		}
+		res.json({
+			"error": "Not Authorized"
+		})
 	}
-	res.json({
-		"error": "Not Authorized"
+	res.status(404).json({
+		"error": "Something went wrong",
+		"code": "BEBE_NOT_FOUND"
 	})
 })
 

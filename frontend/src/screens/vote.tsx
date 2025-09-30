@@ -120,7 +120,14 @@ export default function Vote() {
             </div>
           </div>
         </div>
-        <input type="submit" className="text-2xl bg-[rgb(33_33_33)] box-border" value="Send" />
+        <input
+        style={{
+          backgroundColor: "rgba(255, 255, 255, 0.4)",
+          backdropFilter: "blur(25px)"
+        }}
+        type="submit"
+        className="text-2xl box-border rounded"
+        value="Send" />
       </form>
     </div>
   );
