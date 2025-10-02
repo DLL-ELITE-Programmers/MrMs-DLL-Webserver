@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "../components/header";
-import {type candidate, type participant, type scores } from "../interfaces";
+import {type candidate, type participant, type scores, web } from "../interfaces";
 import axios from "axios";
 import AddContestant from "../components/candidate";
 
@@ -23,7 +23,7 @@ export default function Vote() {
     (async () => {
       try {
         const { data } = await axios.get(
-          "http://localhost:3000/candidates?code=missnapokita",
+          `${web}/candidates?code=missnapokita`,
         );
         setContestants(data);
       } catch (e: any) {
@@ -95,19 +95,19 @@ export default function Vote() {
                   backgroundColor: "rgba(255, 255, 255, 0.4)",
                   backdropFilter: "blur(25px)"
                 }}
-                className={`border-2 ${index === category ? "border-solid border-[#FFD700]" : "border-b-solid border-transparent border-b-[#FFD700]"} cursor-pointer select-none transition-all delay-75 rounded-lg px-2`}>
+                className={`border-2 ${index === category ? "border-solid border-[#FFD700] text-[#FFD700]" : "border-b-solid border-transparent border-b-[#FFD700]"} cursor-pointer select-none transition-all delay-75 rounded-lg px-2`}>
                   {_category}
                 </span>
               )
             })
           }
         </div>
-        <div className="flex flex-col overflow-scroll box-border">
+        <div className="flex flex-col box-border overflow-scroll">
           <div className="flex flex-row">
             <div className="flex flex-col w-full gap-1">
               {contestants?.male?.map((contestant: participant) => {
                 return (
-                  <AddContestant sex="female" validator={numberValidator} minimum={minimum} maximum={maximum}>{contestant}</AddContestant>
+                  <AddContestant sex="male" validator={numberValidator} minimum={minimum} maximum={maximum}>{contestant}</AddContestant>
                 );
               })}
             </div>

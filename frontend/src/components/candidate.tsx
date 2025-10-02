@@ -1,4 +1,5 @@
 import type { participant } from "../interfaces"
+import Input from "../widget/input"
 
 interface CandidateCardProps {
     sex: string
@@ -20,22 +21,17 @@ export default function AddContestant(props: CandidateCardProps){
                 backdropFilter: "blur(15px)"
             }}>
                 <h3 className="text-2xl">{props.sex[0].toUpperCase() + props.sex.substring(1)} Candidate #{props.children.number}</h3>
-                <input
-                    className="text-2xl outline-none ml-4"
-                    min={props.minimum}
-                    required={true}
-                    key={`${props.sex}_candidate_${props.children.number}`}
-                    name={`${props.sex}_candidate_${props.children.number}`}
-                    type="text"
-                    onChange={(
+                <Input onChange={(
                     input: React.ChangeEvent<HTMLInputElement>,
                     ) => {
-                    props.validator(
-                        input,
-                        `${props.sex}_candidate_${props.children.number}`,
-                    );
+                        props.validator(
+                            input,
+                            `${props.sex}_candidate_${props.children.number}`,
+                        );
                     }}
+                    min={props.minimum}
                     max={props.maximum}
+                    name={`${props.sex}_candidate_${props.children.number}`}
                 />
             </div>
         </div>

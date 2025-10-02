@@ -9,3 +9,9 @@ export interface candidate{
 }
 
 export type scores = Record<string, number|undefined>
+
+const web = "http://localhost:3000"
+
+export {
+    web
+}
