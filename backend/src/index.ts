@@ -3,7 +3,6 @@ import dotenv from "dotenv";
 import path from 'path'
 import cors from "cors"
 import * as fs from "fs"
-import access_middleware from "./middleware/access_middleware";
 dotenv.config();
 
 const PORT = process.env.PORT ? Number(process.env.PORT) : 3000;
