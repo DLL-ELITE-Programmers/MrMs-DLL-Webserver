@@ -22,7 +22,7 @@ export default function Input(props: InputProps){
     }
 
     return (
-        <div className={`${props.className} flex flex-row w-full border-2 border-solid border-yellow-700 items-center px-2 rounded py-1 shadow text-shadow-zinc-700`}>
+        <div className={`${props.className} flex flex-row w-full border-[1px] border-solid border-slate-200 items-center px-2 rounded py-1 shadow text-shadow-zinc-700`}>
             <input
                 className="text-2xl outline-none w-full"
                 min={props.min}

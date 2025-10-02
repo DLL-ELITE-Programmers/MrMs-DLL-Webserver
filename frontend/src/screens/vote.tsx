@@ -4,33 +4,37 @@ import {type candidate, type participant, type scores, web } from "../interfaces
 import axios from "axios";
 import AddContestant from "../components/candidate";
 
-const categories = [
-  "Institutional",
-  "Evening Gown",
-  "Summer wear"
-]
-
 export default function Vote() {
   const [contestants, setContestants] = useState<candidate>();
   const [message, setMessage] = useState("");
   const [sheets, setSheets] = useState<scores>({});
   const [requiredFields, setRequired] = useState<string[]>([]);
   const [category, setCategory] = useState(0)
+  const [categories, setCategories] = useState<string[]>([])
   const minimum = 7;
   const maximum = 10;
 
   useEffect(() => {
     (async () => {
       try {
-        const { data } = await axios.get(
-          `${web}/candidates?code=missnapokita`,
-        );
+        const { data } = await axios.get(`${web}/candidates?code=missnapokita`);
         setContestants(data);
       } catch (e: any) {
-        setMessage(e.error);
+        setMessage(e.message ?? "Request failed");
       }
     })();
   }, []);
+  
+  useEffect(() => {
+    (async () => {
+      try {
+        const { data } = await axios.get(`${web}/categories`);
+        setCategories(data);
+      } catch (e: any) {
+        setMessage(e.message ?? "Request failed");
+      }
+    })()
+  }, [])
 
   const numberValidator = (
     input: React.ChangeEvent<HTMLInputElement>,
@@ -47,6 +51,7 @@ export default function Vote() {
     }
     const n = parseFloat(input.target.value);
     if (n >= minimum && n <= maximum) {
+        // TODO: Here's the reason why I use let instead of const
         required = required.filter(item => item !== key);
         required = [...new Set(required.filter(item => item !== key))];
         setSheets({
@@ -63,13 +68,18 @@ export default function Vote() {
     setRequired(required)
   };
 
-  const submit = () => {
+  const submit = async () => {
     if (requiredFields.length > 0) {
       setMessage(
         `The minimum score is ${minimum} and the maximum score is ${maximum}. Please check out these fields: \n${requiredFields.join("\n")}`,
       );
     }else{
-        setMessage("Done")
+        const { data } = await axios.post(`${web}/submit-score`, {
+          "judge": "judge_1",
+          [`category_${category}`]: sheets
+        })
+
+        setMessage(data.message)
     }
   };
 
@@ -92,10 +102,10 @@ export default function Vote() {
                   setCategory(index)
                 }}
                 style={{
-                  backgroundColor: "rgba(255, 255, 255, 0.4)",
+                  backgroundColor: "rgba(203, 213, 225, 0.2)",
                   backdropFilter: "blur(25px)"
                 }}
-                className={`border-2 ${index === category ? "border-solid border-[#FFD700] text-[#FFD700]" : "border-b-solid border-transparent border-b-[#FFD700]"} cursor-pointer select-none transition-all delay-75 rounded-lg px-2`}>
+                className={`border-2 ${index === category ? "border-solid border-slate-300 text-slate-100" : "border-b-solid border-transparent border-b-slate-500 text-white"} cursor-pointer select-none transition-all delay-75 rounded-lg px-2`}>
                   {_category}
                 </span>
               )
@@ -103,15 +113,15 @@ export default function Vote() {
           }
         </div>
         <div className="flex flex-col box-border overflow-scroll">
-          <div className="flex flex-row">
-            <div className="flex flex-col w-full gap-1">
+          <div className="flex flex-row gap-2">
+            <div className="flex flex-col w-full gap-2">
               {contestants?.male?.map((contestant: participant) => {
                 return (
                   <AddContestant sex="male" validator={numberValidator} minimum={minimum} maximum={maximum}>{contestant}</AddContestant>
                 );
               })}
             </div>
-            <div className="flex flex-col w-full gap-1">
+            <div className="flex flex-col w-full gap-2">
               {contestants?.female?.map((contestant: participant) => {
                 return (
                   <AddContestant sex="female" validator={numberValidator} minimum={minimum} maximum={maximum}>{contestant}</AddContestant>
@@ -122,11 +132,11 @@ export default function Vote() {
         </div>
         <input
         style={{
-          backgroundColor: "rgba(255, 255, 255, 0.4)",
-          backdropFilter: "blur(25px)"
+            backgroundColor: "rgba(203, 213, 225, 0.2)",
+            backdropFilter: "blur(25px)"
         }}
         type="submit"
-        className="text-2xl box-border rounded"
+        className="text-2xl box-border rounded text-white border-2 hover:border-slate-300 transition-all delay-100 border-solid border-slate-700"
         value="Send" />
       </form>
     </div>
