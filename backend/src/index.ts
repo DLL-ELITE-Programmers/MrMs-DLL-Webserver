@@ -16,11 +16,11 @@ app.use(express.urlencoded({ extended: true }));
 const candidates = JSON.parse(fs.readFileSync(path.join(__dirname, "data/participant.json"), "utf-8"))
 const datafile = `data/data.json`
 
-const categories = [
-  "Institutional",
-  "Evening Gown",
-  "Summer wear"
-]
+const categories = {
+  "Institutional": 1,
+  "Evening Gown": 1,
+  "Summer wear": 20
+}
 
 app.get("/", (_req: Request, res: Response) => {
 	res.send("Hello po")
@@ -40,11 +40,20 @@ app.get("/candidates", (req: Request, res: Response) => {
 })
 
 app.get("/categories", (req: Request, res: Response) => {
-	res.json(categories)
+	res.json(Object.keys(categories))
 })
 
 app.post("/submit-score", (req: Request, res: Response) => {
-	
+	const data = req.body
+	const json = JSON.parse(fs.readFileSync(datafile, "utf-8"))
+	if(!json[data.judge]){
+		json[data.judge] = {}
+	}
+	json[data.judge][data.category] = data.scores
+	fs.writeFileSync(datafile, JSON.stringify(json, null, 2), "utf-8")
+	res.json({
+		"message": "Recorded"
+	})
 })
 
 app.listen(PORT, () => {
