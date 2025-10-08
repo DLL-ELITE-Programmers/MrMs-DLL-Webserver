@@ -14,7 +14,7 @@ app.use(cors())
 app.use(express.urlencoded({ extended: true }));
 
 const candidates = JSON.parse(fs.readFileSync(path.join(__dirname, "data/participant.json"), "utf-8"))
-const datafile = `data/data.json`
+const datafile = `${__dirname}/data/datafile.json`
 
 const categories = {
   "Institutional": 1,
@@ -46,10 +46,12 @@ app.get("/categories", (req: Request, res: Response) => {
 app.post("/submit-score", (req: Request, res: Response) => {
 	const data = req.body
 	const json = JSON.parse(fs.readFileSync(datafile, "utf-8"))
+
 	if(!json[data.judge]){
 		json[data.judge] = {}
 	}
-	json[data.judge][data.category] = data.scores
+
+	json[data.judge][`category_${data.category}`] = data.scoress
 	fs.writeFileSync(datafile, JSON.stringify(json, null, 2), "utf-8")
 	res.json({
 		"message": "Recorded"

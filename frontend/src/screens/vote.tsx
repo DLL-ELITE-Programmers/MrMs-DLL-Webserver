@@ -76,9 +76,9 @@ export default function Vote() {
     }else{
         const { data } = await axios.post(`${web}/submit-score`, {
           "judge": "judge_1",
-          [`category_${category}`]: sheets
+          "scores": sheets,
+          "category": category
         })
-
         setMessage(data.message)
     }
   };
